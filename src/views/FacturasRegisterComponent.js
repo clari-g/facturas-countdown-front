@@ -152,7 +152,7 @@ class FacturasRegisterComponent extends React.Component {
                       </Col>
                     </Row>
                     <label>Descripción</label>
-                    <Input placeholder='Tell us your thoughts and feelings...' type='textarea' rows='4' />
+                    <Input placeholder='Tell us your thoughts and feelings...' type='textarea' rows='1' />
 
                     <Row>
                       <Col className='ml-auto mr-auto' md='2'>

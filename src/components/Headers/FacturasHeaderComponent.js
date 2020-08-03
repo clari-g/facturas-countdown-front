@@ -36,6 +36,8 @@ import {
   Col,
 } from 'reactstrap';
 
+import $ from 'jquery';
+
 // core components
 
 class FacturasHeaderComponent extends React.Component {
@@ -60,6 +62,7 @@ class FacturasHeaderComponent extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
+      isBirthday: false,
       items: [],
       dob: Date,
       days: null,
@@ -110,6 +113,15 @@ class FacturasHeaderComponent extends React.Component {
               days: days,
             });
           }
+
+          // Modo Cumple
+          if (days === 0) {
+            this.setState({
+              isBirthday: true,
+            });
+            this.party();
+          }
+
           console.log(result);
           console.log(days, weeks);
         },
@@ -126,8 +138,36 @@ class FacturasHeaderComponent extends React.Component {
     window.removeEventListener('scroll', this.updateScroll);
   }
 
+  party() {
+    let colors = ['red', 'yellow', 'blue'];
+    let size = 3;
+    let startPos = -1;
+    let speed = 2000;
+    let cantidad = 100;
+
+    setInterval(function () {
+      let color = colors[Math.floor(Math.random() * 3 + 0)];
+      let w = window.innerWidth;
+      let h = window.innerHeight;
+
+      let e = document.createElement('span');
+      $(e).css('display', 'inline-block');
+      $(e).css('width', size + 'px');
+      $(e).css('height', size + 'px');
+      $(e).css('background', color);
+      $(e).css('position', 'fixed');
+      $(e).css('top', startPos + 'px');
+      $(e).css('left', Math.floor(Math.random() * w + 0) + 'px');
+      $(e).css('z-index', '1000');
+      $(e).animate({ top: h + 'px' }, speed, 'linear', function () {
+        this.remove();
+      });
+      $('html').append(e);
+    }, cantidad);
+  }
+
   render() {
-    const { error, isLoaded, items, dob, days, weeks } = this.state;
+    const { error, isLoaded, isBirthday, items, dob, days, weeks } = this.state;
     if (error) {
       return (
         <>
@@ -170,6 +210,39 @@ class FacturasHeaderComponent extends React.Component {
             <Container>
               <div className='motto text-center'>
                 <h1>Cargando ...</h1>
+              </div>
+              <div className='motto text-right'>
+                <Button href='#' className='btn-round mr-1' color='neutral' target='_blank' outline>
+                  Registro
+                </Button>
+              </div>
+            </Container>
+          </div>
+        </>
+      );
+    } else if (isBirthday) {
+      return (
+        <>
+          <div
+            style={{
+              // backgroundImage: 'url(' + require('assets/img/daniel-olahh.jpg') + ')',
+              backgroundImage: 'url(' + require('assets/img/bg1.jpg') + ')',
+            }}
+            className='page-header'
+            data-parallax={true}
+            ref={this.pageHeader}
+          >
+            <div className='filter' />
+            <Container>
+              <div className='motto text-center'>
+                <h1>¡ Feliz Cumpleaños !</h1>
+                <h1>
+                  {items[0].name.first} {items[0].name.last}
+                </h1>
+                <h3>
+                  {dob.getDate()} de {this.months[dob.getMonth()]}
+                </h3>
+                <br />
               </div>
               <div className='motto text-right'>
                 <Button href='#' className='btn-round mr-1' color='neutral' target='_blank' outline>
