@@ -30,14 +30,14 @@ import NucleoIcons from 'views/NucleoIcons.js';
 import LandingPage from 'views/examples/LandingPage.js';
 import ProfilePage from 'views/examples/ProfilePage.js';
 import RegisterPage from 'views/examples/RegisterPage.js';
-import FacturasLandingPage from 'views/FacturasLandingPage.js';
+import FacturasRegisterComponent from 'views/FacturasRegisterComponent.js';
 // others
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
       {/* <Route path="/index" render={(props) => <Index {...props} />} /> */}
-      <Route path='/index' render={(props) => <FacturasLandingPage {...props} />} />
+      <Route path='/index' render={(props) => <FacturasRegisterComponent {...props} />} />
       <Route path='/nucleo-icons' render={(props) => <NucleoIcons {...props} />} />
       <Route path='/landing-page' render={(props) => <LandingPage {...props} />} />
       <Route path='/profile-page' render={(props) => <ProfilePage {...props} />} />
