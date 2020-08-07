@@ -64,7 +64,7 @@ class FacturasHeaderComponent extends React.Component {
       isLoaded: false,
       isBirthday: false,
       items: [],
-      dob: Date,
+      dob: null,
       days: null,
       weeks: null,
     };
@@ -80,18 +80,26 @@ class FacturasHeaderComponent extends React.Component {
   componentDidMount() {
     window.addEventListener('scroll', this.updateScroll);
 
-    fetch('https://randomuser.me/api/')
+    fetch('http://localhost:3000/getProximaFecha')
+      //fetch('https://randomuser.me/api/')
       .then((res) => res.json())
       .then(
         (result) => {
+          console.log(result);
           this.setState({
             isLoaded: true,
-            items: result.results,
-            dob: new Date(result.results[0].dob.date),
+            // Test API
+            // items: result.results,
+            // dob: new Date(new Date(result.results[0].dob.date).toDateString()),
+            // Facturas API
+            items: result.items,
+            dob: new Date(new Date(result.items[0].date_birthday).toDateString()),
           });
-          let tmpDate = new Date();
+
+          let tmpDate = new Date(new Date().toDateString());
           this.state.dob.setFullYear(tmpDate.getFullYear());
-          let days = Math.floor((this.state.dob.getTime() - tmpDate.getTime()) / (1000 * 60 * 60 * 24));
+
+          let days = (this.state.dob.getTime() - tmpDate.getTime()) / (1000 * 3600 * 24);
           let weeks = Math.round((this.state.dob.getTime() - tmpDate.getTime()) / (7 * 24 * 60 * 60 * 1000));
 
           if (weeks < 0) {
@@ -187,7 +195,9 @@ class FacturasHeaderComponent extends React.Component {
               </div>
               <div className='motto text-right'>
                 <Button href='#' className='btn-round mr-1' color='neutral' target='_blank' outline>
-                  Registro
+                  <span>
+                    <i className='nc-icon nc-minimal-down' /> Registro
+                  </span>
                 </Button>
               </div>
             </Container>
@@ -213,7 +223,9 @@ class FacturasHeaderComponent extends React.Component {
               </div>
               <div className='motto text-right'>
                 <Button href='#' className='btn-round mr-1' color='neutral' target='_blank' outline>
-                  Registro
+                  <span>
+                    <i className='nc-icon nc-minimal-down' /> Registro
+                  </span>
                 </Button>
               </div>
             </Container>
@@ -235,10 +247,13 @@ class FacturasHeaderComponent extends React.Component {
             <div className='filter' />
             <Container>
               <div className='motto text-center'>
-                <h1>¡ Feliz Cumpleaños !</h1>
                 <h1>
-                  {items[0].name.first} {items[0].name.last}
+                  <b>¡ Feliz Cumpleaños !</b>
                 </h1>
+                <h1>
+                  {items[0].name} {items[0].lastname}
+                </h1>
+                <br />
                 <h3>
                   {dob.getDate()} de {this.months[dob.getMonth()]}
                 </h3>
@@ -246,7 +261,9 @@ class FacturasHeaderComponent extends React.Component {
               </div>
               <div className='motto text-right'>
                 <Button href='#' className='btn-round mr-1' color='neutral' target='_blank' outline>
-                  Registro
+                  <span>
+                    <i className='nc-icon nc-minimal-down' /> Registro
+                  </span>
                 </Button>
               </div>
             </Container>
@@ -269,18 +286,25 @@ class FacturasHeaderComponent extends React.Component {
             <Container>
               <div className='motto text-center'>
                 <h1>
-                  Próximo: {items[0].name.first} {items[0].name.last}
+                  Próximo:
+                  <b>
+                    {' ' + items[0].name} {items[0].lastname}
+                  </b>
                 </h1>
-                <h3>
+                <h2>
                   {dob.getDate()} de {this.months[dob.getMonth()]}
-                </h3>
+                </h2>
                 <br />
                 <h3>Aprox {weeks} semanas</h3>
-                <h2>{days} DIAS</h2>
+                <h1>
+                  <b>{days} DIAS</b>
+                </h1>
               </div>
               <div className='motto text-right'>
                 <Button href='#' className='btn-round mr-1' color='neutral' target='_blank' outline>
-                  Registro
+                  <span>
+                    <i className='nc-icon nc-minimal-down' /> Registro
+                  </span>
                 </Button>
               </div>
             </Container>

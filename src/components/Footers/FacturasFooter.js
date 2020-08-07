@@ -28,7 +28,7 @@ function FacturasFooter() {
       <Container>
         <Row>
           <nav className='footer-nav'>
-            <ul>
+            {/* <ul>
               <li>
                 <a href='https://www.creative-tim.com?ref=pkr-footer' target='_blank'>
                   Creative Tim
@@ -44,11 +44,14 @@ function FacturasFooter() {
                   Licenses
                 </a>
               </li>
-            </ul>
+            </ul> */}
           </nav>
           <div className='credits ml-auto'>
             <span className='copyright'>
-              © {new Date().getFullYear()}, made with <i className='fa fa-heart heart' /> by Creative Tim
+              © {new Date().getFullYear()}, made with <i className='fa fa-heart heart' /> by{' '}
+              <a href='https://www.movizen.com/' target='_blank'>
+                Movizen
+              </a>
             </span>
           </div>
         </Row>
