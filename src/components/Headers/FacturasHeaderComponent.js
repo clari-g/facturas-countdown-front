@@ -90,10 +90,10 @@ class FacturasHeaderComponent extends React.Component {
             isLoaded: true,
             // Test API
             // items: result.results,
-            // dob: new Date(new Date(result.results[0].dob.date).toDateString()),
+            // dob: new Date(new Date(result.results.dob.date).toDateString()),
             // Facturas API
             items: result.items,
-            dob: new Date(new Date(result.items[0].date_birthday).toDateString()),
+            dob: new Date(new Date(result.items.date_birthday).toDateString()),
           });
 
           let tmpDate = new Date(new Date().toDateString());
@@ -140,6 +140,17 @@ class FacturasHeaderComponent extends React.Component {
           });
         }
       );
+
+    $(document).ready(function () {
+      $('[anchor="#register"]').click(function () {
+        $('html, body').animate(
+          {
+            scrollTop: $('#registro').offset().top,
+          },
+          750
+        );
+      });
+    });
   }
 
   componentWillUnmount() {
@@ -194,7 +205,7 @@ class FacturasHeaderComponent extends React.Component {
                 <h1>Error {error.message}</h1>
               </div>
               <div className='motto text-right'>
-                <Button href='#' className='btn-round mr-1' color='neutral' target='_blank' outline>
+                <Button anchor='#register' className='btn-round mr-1' color='neutral' outline>
                   <span>
                     <i className='nc-icon nc-minimal-down' /> Registro
                   </span>
@@ -222,7 +233,7 @@ class FacturasHeaderComponent extends React.Component {
                 <h1>Cargando ...</h1>
               </div>
               <div className='motto text-right'>
-                <Button href='#' className='btn-round mr-1' color='neutral' target='_blank' outline>
+                <Button anchor='#register' className='btn-round mr-1' color='neutral' outline>
                   <span>
                     <i className='nc-icon nc-minimal-down' /> Registro
                   </span>
@@ -251,7 +262,7 @@ class FacturasHeaderComponent extends React.Component {
                   <b>¡ Feliz Cumpleaños !</b>
                 </h1>
                 <h1>
-                  {items[0].name} {items[0].lastname}
+                  {items.name} {items.lastname}
                 </h1>
                 <br />
                 <h3>
@@ -260,7 +271,7 @@ class FacturasHeaderComponent extends React.Component {
                 <br />
               </div>
               <div className='motto text-right'>
-                <Button href='#' className='btn-round mr-1' color='neutral' target='_blank' outline>
+                <Button anchor='#register' className='btn-round mr-1' color='neutral' outline>
                   <span>
                     <i className='nc-icon nc-minimal-down' /> Registro
                   </span>
@@ -288,7 +299,7 @@ class FacturasHeaderComponent extends React.Component {
                 <h1>
                   Próximo:
                   <b>
-                    {' ' + items[0].name} {items[0].lastname}
+                    {' ' + items.name} {items.lastname}
                   </b>
                 </h1>
                 <h2>
@@ -301,7 +312,7 @@ class FacturasHeaderComponent extends React.Component {
                 </h1>
               </div>
               <div className='motto text-right'>
-                <Button href='#' className='btn-round mr-1' color='neutral' target='_blank' outline>
+                <Button anchor='#register' className='btn-round mr-1' color='neutral' outline>
                   <span>
                     <i className='nc-icon nc-minimal-down' /> Registro
                   </span>
