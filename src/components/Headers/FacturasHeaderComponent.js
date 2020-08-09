@@ -17,7 +17,6 @@
 
 */
 import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
 
 // reactstrap components
 import {
@@ -37,6 +36,7 @@ import {
 } from 'reactstrap';
 
 import $ from 'jquery';
+import * as moment from 'moment';
 
 // core components
 
@@ -85,53 +85,48 @@ class FacturasHeaderComponent extends React.Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log(result);
-          this.setState({
-            isLoaded: true,
-            // Test API
-            // items: result.results,
-            // dob: new Date(new Date(result.results.dob.date).toDateString()),
-            // Facturas API
-            items: result.items,
-            dob: new Date(new Date(result.items.date_birthday).toDateString()),
-          });
-
-          let tmpDate = new Date(new Date().toDateString());
-          this.state.dob.setFullYear(tmpDate.getFullYear());
-
-          let days = (this.state.dob.getTime() - tmpDate.getTime()) / (1000 * 3600 * 24);
-          let weeks = Math.round((this.state.dob.getTime() - tmpDate.getTime()) / (7 * 24 * 60 * 60 * 1000));
-
-          if (weeks < 0) {
+          if (result.message === undefined) {
             this.setState({
-              weeks: 99,
+              isLoaded: true,
+              // Test API
+              // items: result.results,
+              // dob: new Date(new Date(result.results.dob.date).toDateString()),
+              // Facturas API
+              items: result.items,
+              dob: new Date(new Date(result.items.date_birthday).toDateString()),
             });
-          } else {
+
+            let tmpDate = new Date(new Date().toDateString());
+
+            this.state.dob.setFullYear(tmpDate.getFullYear());
+
+            if (this.state.dob < tmpDate) {
+              this.state.dob.setFullYear(tmpDate.getFullYear() + 1);
+            }
+
+            let days = (this.state.dob.getTime() - tmpDate.getTime()) / (1000 * 3600 * 24);
+            let weeks = Math.round((this.state.dob.getTime() - tmpDate.getTime()) / (7 * 24 * 60 * 60 * 1000));
+
             this.setState({
               weeks: weeks,
-            });
-          }
-
-          if (days < 0) {
-            this.setState({
-              days: 99,
-            });
-          } else {
-            this.setState({
               days: days,
             });
-          }
 
-          // Modo Cumple
-          if (days === 0) {
+            // Modo Cumple
+            if (days === 0) {
+              this.setState({
+                isBirthday: true,
+              });
+              this.party();
+            }
+
+            console.log(result);
+            console.log(days, weeks);
+          } else {
             this.setState({
-              isBirthday: true,
+              error: result.message,
             });
-            this.party();
           }
-
-          console.log(result);
-          console.log(days, weeks);
         },
         (error) => {
           this.setState({
@@ -202,7 +197,11 @@ class FacturasHeaderComponent extends React.Component {
             <div className='filter' />
             <Container>
               <div className='motto text-center'>
-                <h1>Error {error.message}</h1>
+                <h1>ERROR</h1>
+                <h1>
+                  <b>No se encontraron usuarios.</b>
+                </h1>
+                <h2>Message: {error}</h2>
               </div>
               <div className='motto text-right'>
                 <Button anchor='#register' className='btn-round mr-1' color='neutral' outline>

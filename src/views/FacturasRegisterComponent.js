@@ -224,7 +224,7 @@ class FacturasRegisterComponent extends React.Component {
             this.setState({ _error: false });
           }}
         >
-          <b>Un erro ah ocurrido.</b> Contactate con un administrador.
+          <b>Un erro ha ocurrido.</b> Contactate con un administrador.
         </UncontrolledAlert>
 
         <div className='main'>
