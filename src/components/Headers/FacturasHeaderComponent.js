@@ -86,6 +86,8 @@ class FacturasHeaderComponent extends React.Component {
       .then(
         (result) => {
           if (result.message === undefined) {
+            let f = result.items.date_birthday.split('-');
+
             this.setState({
               isLoaded: true,
               // Test API
@@ -93,7 +95,7 @@ class FacturasHeaderComponent extends React.Component {
               // dob: new Date(new Date(result.results.dob.date).toDateString()),
               // Facturas API
               items: result.items,
-              dob: new Date(new Date(result.items.date_birthday).toDateString()),
+              dob: new Date(new Date(f[0], f[1] - 1, f[2]).toDateString()),
             });
 
             let tmpDate = new Date(new Date().toDateString());
