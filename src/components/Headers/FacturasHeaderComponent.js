@@ -79,8 +79,8 @@ class FacturasHeaderComponent extends React.Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.updateScroll);
-
-    fetch('http://localhost:3000/getProximaFecha')
+    console.log(process.env);
+    fetch(process.env.REACT_APP_API_URL + '/getProximaFecha')
       //fetch('https://randomuser.me/api/')
       .then((res) => res.json())
       .then(

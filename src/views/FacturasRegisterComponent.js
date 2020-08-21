@@ -168,7 +168,7 @@ class FacturasRegisterComponent extends React.Component {
   }
 
   sendForm() {
-    var apiBaseUrl = 'http://localhost:3000/usuarios/create';
+    var apiBaseUrl = process.env.REACT_APP_API_URL + '/usuarios/create';
     const self = this;
     Axios.post(apiBaseUrl, this.state.fields)
       .then(
