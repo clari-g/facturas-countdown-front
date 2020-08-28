@@ -103,7 +103,7 @@ class FacturasHeaderComponent extends React.Component {
 
             items.forEach((i) => {
               if (this.name !== '') {
-                this.name += ', ';
+                this.name += ',';
               }
               this.name += ' ' + i.name + ' ' + i.lastname;
             });
