@@ -56,6 +56,7 @@ class FacturasHeaderComponent extends React.Component {
     'Noviembre',
     'Diciembre',
   ];
+  name = '';
 
   constructor(props) {
     super(props);
@@ -86,7 +87,9 @@ class FacturasHeaderComponent extends React.Component {
       .then(
         (result) => {
           if (result.message === undefined) {
-            let f = result.items.date_birthday.split('-');
+            let items = Array.of(result.items);
+
+            let f = items[0].date_birthday.split('-');
 
             this.setState({
               isLoaded: true,
@@ -94,8 +97,15 @@ class FacturasHeaderComponent extends React.Component {
               // items: result.results,
               // dob: new Date(new Date(result.results.dob.date).toDateString()),
               // Facturas API
-              items: result.items,
+              items: items,
               dob: new Date(new Date(f[0], f[1] - 1, f[2]).toDateString()),
+            });
+
+            items.forEach((i) => {
+              if (this.name !== '') {
+                this.name += ', ';
+              }
+              this.name += ' ' + i.name + ' ' + i.lastname;
             });
 
             let tmpDate = new Date(new Date().toDateString());
@@ -121,8 +131,6 @@ class FacturasHeaderComponent extends React.Component {
               });
               this.party();
             }
-
-            console.log(result);
             console.log(days, weeks);
           } else {
             this.setState({
@@ -131,9 +139,10 @@ class FacturasHeaderComponent extends React.Component {
           }
         },
         (error) => {
+          console.log(error);
           this.setState({
             isLoaded: true,
-            error,
+            error: 'Error',
           });
         }
       );
@@ -262,9 +271,7 @@ class FacturasHeaderComponent extends React.Component {
                 <h1>
                   <b>¡ Feliz Cumpleaños !</b>
                 </h1>
-                <h1>
-                  {items.name} {items.lastname}
-                </h1>
+                <h1>{this.name}</h1>
                 <br />
                 <h3>
                   {dob.getDate()} de {this.months[dob.getMonth()]}
@@ -299,9 +306,7 @@ class FacturasHeaderComponent extends React.Component {
               <div className='motto text-center'>
                 <h1>
                   Próximo:
-                  <b>
-                    {' ' + items.name} {items.lastname}
-                  </b>
+                  <b>{this.name}</b>
                 </h1>
                 <h2>
                   {dob.getDate()} de {this.months[dob.getMonth()]}
