@@ -87,8 +87,7 @@ class FacturasHeaderComponent extends React.Component {
       .then(
         (result) => {
           if (result.message === undefined) {
-            let items = Array.of(result.items);
-
+            let items = result.items;
             let f = items[0].date_birthday.split('-');
 
             this.setState({
@@ -304,8 +303,8 @@ class FacturasHeaderComponent extends React.Component {
             <div className='filter' />
             <Container>
               <div className='motto text-center'>
+                <h1>Próximo:</h1>
                 <h1>
-                  Próximo:
                   <b>{this.name}</b>
                 </h1>
                 <h2>
